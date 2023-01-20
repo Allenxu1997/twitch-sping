@@ -55,7 +55,7 @@ public class TwitchService {
         }
     }
 
-    public List<Stream> getSteams(List<String> gameIds, int first) {
+    public List<Stream> getStreams(List<String> gameIds, int first) {
         if (token == null) {
             token = twitchIdentityClient.requestAccessToken(twitchClientId, twitchSecret, "client_credentials");
         }
