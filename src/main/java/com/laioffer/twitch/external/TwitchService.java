@@ -4,6 +4,7 @@ import com.laioffer.twitch.external.TwitchApiClient;
 import com.laioffer.twitch.external.TwitchIdentityClient;
 import com.laioffer.twitch.external.model.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
@@ -30,7 +31,7 @@ public class TwitchService {
         this.twitchApiClient = twitchApiClient;
         this.twitchIdentityClient = twitchIdentityClient;
     }
-
+    @Cacheable("top_games")
     public List<Game> getTopGames() {
         if (token == null) {
             token = twitchIdentityClient.requestAccessToken(twitchClientId, twitchSecret, "client_credentials");
@@ -42,7 +43,7 @@ public class TwitchService {
             return twitchApiClient.getTopGames(bearerToken()).data();
         }
     }
-
+    @Cacheable("games_by_name")
     public List<Game> getGames(String name) {
         if (token == null) {
             token = twitchIdentityClient.requestAccessToken(twitchClientId, twitchSecret, "client_credentials");

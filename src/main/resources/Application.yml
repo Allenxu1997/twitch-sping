@@ -1,8 +1,12 @@
 spring:
+  cache:
+    caffeine:
+      spec: expireAfterWrite=1m
   sql:
     init:
       mode: ${INIT_DB:always}
       schema-locations: "classpath:database-init.sql"
+
   datasource:
     url: jdbc:mysql://${DATABASE_URL:localhost}:3306/twitch?createDatabaseIfNotExist=true
     username: ${DATABASE_USERNAME:root}
